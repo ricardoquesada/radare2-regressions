@@ -702,6 +702,129 @@ EXPECT='%02
 0x00000003
 '
 run_test
+#-------------------------------------------------------------------------
+# ORA
+#-------------------------------------------------------------------------
+
+NAME="op: ora #$82"
+FILE=malloc://0x200
+CMDS='
+e asm.arch=6502; e asm.anal=6502; e asm.bits=8; aei; aeim
+ar a=0x02
+wx 0980
+aes; ar a; ar flags
+'
+EXPECT='0x00000082
+0x00000080
+'
+run_test
+
+NAME="op: ora \$10"
+FILE=malloc://0x200
+CMDS='
+e asm.arch=6502; e asm.anal=6502; e asm.bits=8; aei; aeim
+ae 0x02,0x10,=[1]
+ar a=0x80
+wx 0510
+aes; ar a; ar flags
+'
+EXPECT='0x00000082
+0x00000080
+'
+run_test
+
+NAME="op: ora \$10,x"
+FILE=malloc://0x200
+CMDS='
+e asm.arch=6502; e asm.anal=6502; e asm.bits=8; aei; aeim
+ae 0x02,0x18,=[1]
+ar x=8
+ar a=0x80
+wx 1510
+aes; ar a; ar flags
+'
+EXPECT='0x00000082
+0x00000080
+'
+run_test
+
+NAME="op: ora \$0100"
+FILE=malloc://0x200
+CMDS='
+e asm.arch=6502; e asm.anal=6502; e asm.bits=8; aei; aeim
+ae 0x02,0x0100,=[1]
+ar a=0x80
+wx 0d0001
+aes; ar a; ar flags
+'
+EXPECT='0x00000082
+0x00000080
+'
+run_test
+
+NAME="op: ora \$0100,x"
+FILE=malloc://0x200
+CMDS='
+e asm.arch=6502; e asm.anal=6502; e asm.bits=8; aei; aeim
+ae 0x02,0x0108,=[1]
+ar x=8
+ar a=0x80
+wx 1d0001
+aes; ar a; ar flags
+'
+EXPECT='0x00000082
+0x00000080
+'
+run_test
+
+NAME="op: ora \$0100,y"
+FILE=malloc://0x200
+CMDS='
+e asm.arch=6502; e asm.anal=6502; e asm.bits=8; aei; aeim
+ae 0x02,0x0108,=[1]
+ar y=8
+ar a=0x80
+wx 190001
+aes; ar a; ar flags
+'
+EXPECT='0x00000082
+0x00000080
+'
+run_test
+
+NAME="op: ora (\$10,x)"
+FILE=malloc://0x200
+CMDS='
+e asm.arch=6502; e asm.anal=6502; e asm.bits=8; aei; aeim
+ae 0x02,0x108,=[1]
+ae 0x108,0x18,=[2]
+ar x=0x08
+ar a=0x80
+wx 0110
+aes; ar a; ar flags
+'
+EXPECT='0x00000082
+0x00000080
+'
+run_test
+
+NAME="op: ora (\$10),y"
+FILE=malloc://0x200
+CMDS='
+e asm.arch=6502; e asm.anal=6502; e asm.bits=8; aei; aeim
+aei;aeim
+ae 0x02,0x108,=[1]
+ae 0x100,0x10,=[2]
+ar y=0x08
+ar a=0x80
+wx 1110
+aes; ar a; ar flags
+'
+EXPECT='0x00000082
+0x00000080
+'
+run_test
+
 
 #-------------------------------------------------------------------------
 # Flags
